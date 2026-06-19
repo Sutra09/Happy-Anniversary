@@ -708,11 +708,9 @@ updateDots();
 
 // ── MUSIC ──
 const songs = [
-  {title:"Tum Hi Ho",               artist:"Aashiqui 2",            file:"tum-hi-ho.mp3"},
-  {title:"Tujh Mein Rab Dikhta Hai",artist:"Rab Ne Bana Di Jodi",   file:"tujh-mein-rab.mp3"},
-  {title:"Raabta",                  artist:"Agent Sasco",            file:"raabta.mp3"},
-  {title:"Kal Ho Naa Ho",           artist:"Sonu Nigam",             file:"kal-ho-na-ho.mp3"},
-  {title:"Tere Liye",               artist:"Atif Aslam",             file:"tere-liye.mp3"},
+
+  { file:"tujh-mein-rab.mp3"},
+  
 ];
 let curSong=0;
 const audio=document.getElementById('bg-music');
@@ -721,8 +719,6 @@ function loadSong(idx){
   curSong=(idx+songs.length)%songs.length;
   const s=songs[curSong];
   audio.src=s.file;
-  document.getElementById('song-title').textContent=s.title;
-  document.getElementById('song-subtitle').textContent='♪ '+s.artist+' — playing for love ♪';
   progFill.style.animation='none';
   void progFill.offsetWidth;
   progFill.style.animation='progAnim 30s linear infinite';
