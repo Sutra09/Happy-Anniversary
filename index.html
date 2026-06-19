@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Mom & Dad — 24 Years of Love 💕</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Lato:wght@300;400;700&family=Dancing+Script:wght@400;700&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --blush:#F7C5D0;--blush-light:#FDE8EE;--blush-mid:#F0A0B8;
+  --lavender:#C8AEED;--lavender-light:#EDE0FB;--lavender-dark:#9B72CF;
+  --rose:#E8607A;--ivory:#FDF6F0;--text-dark:#3D2B3D;--text-mid:#7A5C7A;
+  --gold:#D4A843;--gold-light:#F5E6B8;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+
+/* ── SCROLL FUNNEL ── */
+html{overflow:hidden;height:100%;}
+body{
+  font-family:'Lato',sans-serif;color:var(--text-dark);
+  height:100%;overflow-y:scroll;
+  scroll-snap-type:y mandatory;scroll-behavior:smooth;overflow-x:hidden;
+}
+.slide{
+  scroll-snap-align:start;scroll-snap-stop:always;
+  min-height:100vh;width:100%;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:80px 24px 40px;position:relative;overflow:hidden;
+}
+
+/* ── PROGRESS DOTS ── */
+#progress-nav{
+  position:fixed;right:22px;top:50%;transform:translateY(-50%);
+  z-index:500;display:flex;flex-direction:column;gap:12px;
+}
+.dot{
+  width:10px;height:10px;border-radius:50%;
+  background:rgba(232,96,122,0.25);border:1.5px solid rgba(232,96,122,0.5);
+  cursor:pointer;transition:all 0.3s;position:relative;
+}
+.dot.active{background:var(--rose);border-color:var(--rose);transform:scale(1.4);}
+.dot:hover{background:var(--blush-mid);}
+.dot-tip{
+  position:absolute;right:20px;top:50%;transform:translateY(-50%);
+  background:rgba(61,43,61,0.85);color:#fff;font-size:11px;
+  padding:4px 10px;border-radius:20px;white-space:nowrap;
+  opacity:0;pointer-events:none;transition:opacity 0.2s;
+}
+.dot:hover .dot-tip{opacity:1;}
+
+/* ── MUSIC BAR ── */
+#music-bar{
+  position:fixed;top:0;left:0;right:0;
+  background:linear-gradient(90deg,rgba(200,174,237,0.95),rgba(247,197,208,0.95));
+  backdrop-filter:blur(10px);z-index:1000;padding:8px 20px;
+  display:flex;align-items:center;justify-content:space-between;
+  box-shadow:0 2px 20px rgba(155,114,207,0.2);
+}
+.music-info{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text-dark);}
+.music-note-spin{font-size:18px;animation:noteSpin 2s ease-in-out infinite;}
+@keyframes noteSpin{0%,100%{transform:rotate(-10deg) scale(1);}50%{transform:rotate(10deg) scale(1.2);}}
+#song-title{font-weight:700;font-family:'Dancing Script',cursive;font-size:15px;}
+#song-subtitle{font-size:10px;color:var(--text-mid);}
+.music-controls{display:flex;gap:6px;align-items:center;}
+.ctrl-btn{
+  background:rgba(255,255,255,0.6);border:1px solid rgba(155,114,207,0.3);
+  border-radius:20px;padding:3px 10px;cursor:pointer;font-size:12px;
+  color:var(--text-dark);transition:all 0.2s;
+}
+.ctrl-btn:hover{background:rgba(255,255,255,0.9);transform:scale(1.05);}
+.music-progress{width:100px;height:3px;background:rgba(255,255,255,0.4);border-radius:2px;overflow:hidden;}
+.music-progress-fill{height:100%;background:var(--rose);border-radius:2px;animation:progAnim 30s linear infinite;}
+@keyframes progAnim{0%{width:0%}100%{width:100%}}
+
+/* ── PETALS ── */
+#petal-layer{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;overflow:hidden;}
+.petal{position:absolute;top:-40px;animation:petalFall linear infinite;opacity:0.85;user-select:none;}
+@keyframes petalFall{
+  0%{transform:translateY(0) rotate(0deg) translateX(0);opacity:0.9;}
+  50%{transform:translateY(50vh) rotate(180deg) translateX(30px);opacity:0.7;}
+  100%{transform:translateY(110vh) rotate(360deg) translateX(-20px);opacity:0;}
+}
+
+/* ── BURST ── */
+.burst-container{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9998;}
+.burst-emoji{position:absolute;pointer-events:none;animation:burstOut 1.2s ease-out forwards;}
+@keyframes burstOut{
+  0%{opacity:1;transform:translate(0,0) scale(1) rotate(0deg);}
+  100%{opacity:0;transform:translate(var(--bx),var(--by)) scale(0.5) rotate(var(--br));}
+}
+
+/* ── SCROLL HINT ── */
+.scroll-hint{
+  position:absolute;bottom:22px;left:50%;transform:translateX(-50%);
+  display:flex;flex-direction:column;align-items:center;gap:4px;
+  font-size:11px;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(122,92,122,0.55);cursor:pointer;
+  animation:fadeInHint 2s ease 1.5s both;
+}
+@keyframes fadeInHint{from{opacity:0}to{opacity:1}}
+.hint-arrow{font-size:18px;animation:bounceHint 1.5s ease-in-out infinite;}
+@keyframes bounceHint{0%,100%{transform:translateY(0);}50%{transform:translateY(6px);}}
+
+/* ── COMMON SECTION TEXT ── */
+.sec-eye{font-size:11px;letter-spacing:4px;text-transform:uppercase;color:var(--lavender-dark);margin-bottom:10px;}
+.sec-title{font-family:'Playfair Display',serif;font-size:clamp(26px,5vw,40px);color:var(--text-dark);margin-bottom:6px;}
+.sec-title em{color:var(--rose);font-style:italic;}
+.sec-sub{color:var(--text-mid);font-size:14px;margin-bottom:28px;}
+.reveal{opacity:0;transform:translateY(28px);transition:opacity 0.7s ease,transform 0.7s ease;}
+.reveal.vis{opacity:1;transform:translateY(0);}
+
+/* ── SLIDE 1 — HERO ── */
+#s1{background:linear-gradient(160deg,#FDE8EE 0%,#EDE0FB 40%,#F7C5D0 70%,#E8D5F5 100%);}
+.bg-circle{position:absolute;border-radius:50%;opacity:0.15;pointer-events:none;}
+.bc1{width:500px;height:500px;background:var(--lavender);top:-120px;right:-120px;animation:fcircle 8s ease-in-out infinite;}
+.bc2{width:350px;height:350px;background:var(--blush);bottom:-60px;left:-80px;animation:fcircle 10s ease-in-out infinite reverse;}
+.bc3{width:200px;height:200px;background:var(--gold);top:35%;left:8%;animation:fcircle 6s ease-in-out infinite 2s;}
+@keyframes fcircle{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(18px,-18px) scale(1.05);}}
+.hero-eyebrow{font-size:12px;letter-spacing:4px;text-transform:uppercase;color:var(--lavender-dark);margin-bottom:18px;animation:fup 1s ease 0.2s both;}
+.hero-names{font-family:'Dancing Script',cursive;font-size:clamp(50px,10vw,94px);color:var(--text-dark);line-height:1.1;animation:fup 1s ease 0.4s both;}
+.hero-names .amp{color:var(--rose);font-style:italic;}
+.badge{
+  display:inline-flex;align-items:center;gap:10px;
+  background:rgba(255,255,255,0.7);border:2px solid var(--blush-mid);
+  border-radius:50px;padding:10px 26px;margin:24px 0;
+  animation:fup 1s ease 0.6s both;backdrop-filter:blur(8px);
+}
+.badge-num{font-family:'Playfair Display',serif;font-size:46px;font-weight:700;color:var(--rose);line-height:1;}
+.badge-label{text-align:left;font-size:12px;color:var(--text-mid);line-height:1.4;}
+.badge-label strong{display:block;font-size:15px;color:var(--text-dark);}
+.hero-date{font-family:'Playfair Display',serif;font-style:italic;font-size:17px;color:var(--text-mid);margin-bottom:14px;animation:fup 1s ease 0.7s both;}
+.hero-sub{font-size:15px;color:var(--text-mid);max-width:460px;line-height:1.7;margin-bottom:32px;text-align:center;animation:fup 1s ease 0.8s both;}
+.hero-emojis{display:flex;gap:14px;flex-wrap:wrap;justify-content:center;animation:fup 1s ease 0.9s both;}
+.h-em{font-size:34px;cursor:pointer;display:inline-block;animation:floatEm 3s ease-in-out infinite;}
+.h-em:nth-child(1){animation-delay:0s;} .h-em:nth-child(2){animation-delay:0.4s;}
+.h-em:nth-child(3){animation-delay:0.8s;} .h-em:nth-child(4){animation-delay:1.2s;}
+.h-em:nth-child(5){animation-delay:1.6s;} .h-em:nth-child(6){animation-delay:2.0s;}
+@keyframes floatEm{0%,100%{transform:translateY(0) rotate(0deg);}50%{transform:translateY(-10px) rotate(5deg);}}
+.h-em:hover{transform:scale(1.5) rotate(15deg)!important;animation:none!important;}
+@keyframes fup{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+
+/* ── SLIDE 2 — COUNTER ── */
+#s2{background:linear-gradient(135deg,var(--lavender-light),var(--blush-light));}
+.counter-grid{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;max-width:780px;}
+.c-card{
+  background:rgba(255,255,255,0.8);border:1.5px solid var(--blush);
+  border-radius:18px;padding:20px 16px;min-width:108px;text-align:center;
+  backdrop-filter:blur(10px);transition:transform 0.2s,box-shadow 0.2s;cursor:default;
+}
+.c-card:hover{transform:translateY(-6px);box-shadow:0 12px 36px rgba(232,96,122,0.2);}
+.c-num{font-family:'Playfair Display',serif;font-size:36px;font-weight:700;color:var(--rose);line-height:1;display:block;}
+.c-lbl{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-mid);margin-top:4px;display:block;}
+.c-ico{font-size:18px;display:block;margin-top:6px;}
+.counter-quote{margin-top:24px;font-family:'Dancing Script',cursive;font-size:22px;color:var(--rose);}
+
+/* ── SLIDE 3 — MEMORIES ── */
+#s3{background:linear-gradient(180deg,var(--ivory) 0%,var(--blush-light) 100%);justify-content:flex-start;padding-top:90px;overflow-y:auto;scroll-snap-align:start;}
+.mem-wrap{max-width:820px;width:100%;margin:0 auto;}
+.mem-header{text-align:center;margin-bottom:40px;}
+.memory-card{
+  display:flex;align-items:flex-start;gap:24px;margin-bottom:36px;
+  opacity:0;transform:translateX(-36px);transition:opacity 0.6s ease,transform 0.6s ease;
+}
+.memory-card.vis{opacity:1;transform:translateX(0);}
+.memory-card:nth-child(even){flex-direction:row-reverse;transform:translateX(36px);}
+.memory-card:nth-child(even).vis{transform:translateX(0);}
+.mem-icon{
+  flex-shrink:0;width:72px;height:72px;border-radius:50%;
+  display:flex;align-items:center;justify-content:center;font-size:32px;position:relative;
+}
+.mem-icon::after{
+  content:'';position:absolute;inset:-4px;border-radius:50%;
+  border:2px dashed var(--blush-mid);animation:rotateDash 8s linear infinite;
+}
+@keyframes rotateDash{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+.mi-a{background:var(--blush-light);} .mi-b{background:var(--lavender-light);}
+.mi-c{background:var(--gold-light);}  .mi-d{background:#fff;}
+.mem-body{flex:1;background:rgba(255,255,255,0.8);border:1px solid var(--blush);border-radius:16px;padding:20px 24px;}
+.mem-yr{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:var(--lavender-dark);margin-bottom:6px;}
+.mem-ttl{font-family:'Playfair Display',serif;font-size:20px;color:var(--text-dark);margin-bottom:8px;}
+.mem-txt{color:var(--text-mid);font-size:14px;line-height:1.7;}
+.mem-trail{display:flex;gap:6px;margin-top:12px;}
+.trail-em{font-size:18px;cursor:pointer;transition:transform 0.2s;display:inline-block;}
+.trail-em:hover{transform:scale(1.4) rotate(-10deg);}
+
+/* ── SLIDE 4 & 5 — GALLERY (2 pages, 4 photos each) with EMOJI DECO ── */
+#s4,#s5{
+  background:linear-gradient(160deg,var(--blush-light) 0%,var(--lavender-light) 50%,var(--blush-light) 100%);
+  justify-content:flex-start;padding-top:85px;overflow-y:auto;
+}
+#s5{background:linear-gradient(160deg,var(--lavender-light) 0%,var(--blush-light) 50%,var(--lavender-light) 100%);}
+
+/* floating emoji decorations orbiting each card */
+.photo-stage{
+  position:relative;width:100%;max-width:760px;
+  margin:0 auto;
+}
+.gallery-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:28px;
+  width:100%;
+}
+.g-wrap{
+  position:relative;
+  /* extra space so orbit emojis don't clip */
+  padding:30px;
+}
+
+/* the actual photo card — bigger now, 2 per row */
+.g-card{
+  width:100%;aspect-ratio:1;border-radius:22px;overflow:hidden;
+  position:relative;cursor:pointer;
+  background:linear-gradient(135deg,var(--blush-light),var(--lavender-light));
+  border:3px solid rgba(247,197,208,0.8);
+  box-shadow:0 10px 38px rgba(200,174,237,0.28);
+  transition:transform 0.3s,box-shadow 0.3s;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
+}
+.g-card:hover{
+  transform:scale(1.035);
+  box-shadow:0 22px 56px rgba(232,96,122,0.3);
+  z-index:3;
+}
+.g-card img{
+  width:100%;height:100%;object-fit:cover;
+  position:absolute;top:0;left:0;border-radius:19px;
+  transition:transform 0.4s;
+}
+.g-card:hover img{transform:scale(1.07);}
+.g-ico{font-size:54px;position:relative;z-index:1;}
+.g-txt{font-family:'Dancing Script',cursive;font-size:19px;color:var(--text-mid);position:relative;z-index:1;}
+.g-num{
+  font-size:11px;background:rgba(247,197,208,0.8);color:var(--text-dark);
+  border-radius:20px;padding:3px 11px;letter-spacing:1px;text-transform:uppercase;
+  position:relative;z-index:1;
+}
+
+/* caption label strip at bottom */
+.g-caption{
+  position:absolute;bottom:0;left:0;right:0;
+  background:linear-gradient(0deg,rgba(61,43,61,0.68),transparent);
+  border-radius:0 0 19px 19px;
+  padding:26px 14px 14px;
+  font-family:'Dancing Script',cursive;
+  font-size:17px;color:#fff;
+  text-align:center;
+  opacity:0;transition:opacity 0.3s;
+  z-index:2;
+}
+.g-card:hover .g-caption{opacity:1;}
+
+/* ── ORBIT EMOJIS around each card ── */
+.orbit-em{
+  position:absolute;
+  font-size:24px;
+  cursor:pointer;
+  z-index:10;
+  transition:transform 0.15s;
+  /* base position set inline via CSS custom props */
+  animation:orbitFloat var(--od,4s) ease-in-out var(--odel,0s) infinite;
+  user-select:none;
+}
+.orbit-em:hover{transform:scale(1.6) rotate(20deg)!important;animation:none!important;}
+@keyframes orbitFloat{
+  0%,100%{transform:translate(0,0) rotate(0deg);}
+  25%{transform:translate(6px,-8px) rotate(10deg);}
+  50%{transform:translate(-5px,-6px) rotate(-5deg);}
+  75%{transform:translate(7px,5px) rotate(8deg);}
+}
+
+/* positions: top-center, mid-right, bottom-center, mid-left */
+/* set via inline style on each orbit-em */
+
+.g-note{
+  margin:22px auto 0;
+  background:rgba(255,255,255,0.75);border:1px dashed var(--blush-mid);
+  border-radius:10px;padding:12px 20px;display:inline-block;
+  font-size:12px;color:var(--text-mid);max-width:520px;text-align:center;
+}
+.g-note code{background:var(--blush-light);border-radius:5px;padding:1px 6px;font-family:monospace;color:var(--rose);font-size:11px;}
+.g-page-label{
+  font-family:'Dancing Script',cursive;font-size:16px;color:var(--lavender-dark);
+  margin-bottom:18px;text-align:center;
+}
+
+/* ── LIGHTBOX ── */
+#lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:20000;align-items:center;justify-content:center;backdrop-filter:blur(10px);}
+#lightbox.open{display:flex;}
+.lb-inner{
+  background:#fff;border-radius:20px;padding:28px;max-width:92vw;
+  text-align:center;position:relative;
+  box-shadow:0 30px 80px rgba(0,0,0,0.4);
+}
+.lb-close{position:absolute;top:12px;right:16px;font-size:22px;cursor:pointer;color:var(--text-mid);background:none;border:none;}
+.lb-ph{
+  width:320px;height:240px;
+  background:linear-gradient(135deg,var(--blush-light),var(--lavender-light));
+  border-radius:12px;display:flex;align-items:center;justify-content:center;
+  font-size:56px;margin:0 auto 14px;
+}
+.lb-caption{font-family:'Dancing Script',cursive;font-size:20px;color:var(--text-mid);}
+
+/* ── SLIDE 6 — LOVE LETTER ── */
+#s6{background:linear-gradient(160deg,var(--lavender-light) 0%,var(--blush-light) 100%);}
+.letter-card{
+  max-width:640px;width:100%;
+  background:rgba(255,255,255,0.85);border:1.5px solid var(--blush);
+  border-radius:22px;padding:48px 44px;position:relative;
+  backdrop-filter:blur(12px);box-shadow:0 18px 56px rgba(200,174,237,0.22);
+}
+.letter-card::before{
+  content:'❝';position:absolute;top:16px;left:28px;
+  font-family:'Playfair Display',serif;font-size:72px;color:var(--blush);line-height:1;opacity:0.45;
+}
+.l-sal{font-family:'Dancing Script',cursive;font-size:26px;color:var(--rose);margin-bottom:20px;}
+.l-body{font-family:'Playfair Display',serif;font-style:italic;font-size:15px;color:var(--text-dark);line-height:1.85;text-align:left;margin-bottom:22px;}
+.l-body p{margin-bottom:14px;}
+.l-sign{font-family:'Dancing Script',cursive;font-size:20px;color:var(--lavender-dark);text-align:right;}
+.l-hearts{display:flex;gap:8px;justify-content:center;margin-top:22px;font-size:20px;}
+.l-ht{animation:heartBeat 1.3s ease-in-out infinite;cursor:pointer;display:inline-block;}
+.l-ht:nth-child(1){animation-delay:0s;}.l-ht:nth-child(2){animation-delay:0.15s;}
+.l-ht:nth-child(3){animation-delay:0.3s;}.l-ht:nth-child(4){animation-delay:0.45s;}.l-ht:nth-child(5){animation-delay:0.6s;}
+@keyframes heartBeat{0%,100%{transform:scale(1);}14%{transform:scale(1.3);}28%{transform:scale(1);}42%{transform:scale(1.15);}70%{transform:scale(1);}}
+
+/* ── SLIDE 7 — FINALE ── */
+#s7{background:linear-gradient(160deg,#1a0a2e 0%,#2d1b4e 40%,#4a1f5e 70%,#1a0a2e 100%);}
+#fw-canvas{position:absolute;top:0;left:0;width:100%;height:100%;pointer-events:none;}
+.finale-inner{position:relative;z-index:2;text-align:center;}
+.fin-em{font-size:56px;display:block;margin-bottom:20px;animation:finSpin 3s ease-in-out infinite;}
+@keyframes finSpin{0%,100%{transform:rotate(-5deg) scale(1);}50%{transform:rotate(5deg) scale(1.1);}}
+.fin-title{font-family:'Dancing Script',cursive;font-size:clamp(36px,8vw,68px);color:#fff;margin-bottom:12px;text-shadow:0 0 40px rgba(247,197,208,0.8);}
+.fin-sub{font-family:'Playfair Display',serif;font-style:italic;font-size:16px;color:rgba(255,255,255,0.65);margin-bottom:32px;max-width:460px;}
+.fin-num{
+  font-family:'Playfair Display',serif;font-size:clamp(80px,18vw,150px);font-weight:700;
+  color:transparent;background:linear-gradient(135deg,#F7C5D0,#C8AEED,#F7C5D0);
+  -webkit-background-clip:text;background-clip:text;line-height:1;margin-bottom:6px;
+  animation:shimmer 3s linear infinite;background-size:200% 100%;
+}
+@keyframes shimmer{0%{background-position:200% center;}100%{background-position:-200% center;}}
+.fin-lbl{font-size:13px;letter-spacing:5px;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:40px;}
+.fin-btn{
+  display:inline-block;background:linear-gradient(135deg,var(--blush),var(--lavender));
+  color:var(--text-dark);font-family:'Lato',sans-serif;font-weight:700;font-size:13px;
+  letter-spacing:2px;text-transform:uppercase;padding:13px 32px;border-radius:50px;
+  border:none;cursor:pointer;transition:transform 0.2s,box-shadow 0.2s;
+}
+.fin-btn:hover{transform:scale(1.07);box-shadow:0 12px 40px rgba(247,197,208,0.45);}
+
+/* ── TOAST ── */
+#toast{
+  position:fixed;bottom:28px;left:50%;
+  transform:translateX(-50%) translateY(70px);
+  background:rgba(61,43,61,0.9);color:#fff;border-radius:30px;
+  padding:10px 24px;font-size:13px;backdrop-filter:blur(10px);
+  z-index:10000;transition:transform 0.35s,opacity 0.35s;opacity:0;white-space:nowrap;
+}
+#toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+
+/* ── RESPONSIVE ── */
+@media(max-width:680px){
+  .gallery-grid{grid-template-columns:repeat(2,1fr);gap:14px;}
+  .g-wrap{padding:16px;}
+  .orbit-em{font-size:15px;}
+  .memory-card,.memory-card:nth-child(even){flex-direction:column;align-items:center;text-align:center;transform:translateY(28px);}
+  .memory-card.vis{transform:translateY(0);}
+  .letter-card{padding:32px 20px;}
+  .c-num{font-size:28px;}.c-card{min-width:88px;padding:14px 10px;}
+  #progress-nav{right:10px;}
+}
+@media(max-width:420px){
+  .gallery-grid{grid-template-columns:1fr 1fr;gap:10px;}
+}
+</style>
+</head>
+<body>
+
+<!-- PETALS -->
+<div id="petal-layer"></div>
+<div class="burst-container" id="burst-layer"></div>
+
+<!-- PROGRESS DOTS — 7 slides now -->
+<nav id="progress-nav">
+  <div class="dot active" onclick="goTo('s1')"><span class="dot-tip">Welcome</span></div>
+  <div class="dot" onclick="goTo('s2')"><span class="dot-tip">24 Years</span></div>
+  <div class="dot" onclick="goTo('s3')"><span class="dot-tip">Memories</span></div>
+  <div class="dot" onclick="goTo('s4')"><span class="dot-tip">Gallery I</span></div>
+  <div class="dot" onclick="goTo('s5')"><span class="dot-tip">Gallery II</span></div>
+  <div class="dot" onclick="goTo('s6')"><span class="dot-tip">Love Letter</span></div>
+  <div class="dot" onclick="goTo('s7')"><span class="dot-tip">Fireworks</span></div>
+</nav>
+
+<!-- MUSIC BAR -->
+<div id="music-bar">
+  <div class="music-controls">
+    <div class="music-progress"><div class="music-progress-fill" id="prog-fill"></div></div>
+    <button class="ctrl-btn" id="prev-btn">⏮</button>
+    <button class="ctrl-btn" id="play-btn">⏸</button>
+    <button class="ctrl-btn" id="next-btn">⏭</button>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 1 — HERO ═══ -->
+<section class="slide" id="s1">
+  <div class="bg-circle bc1"></div>
+  <div class="bg-circle bc2"></div>
+  <div class="bg-circle bc3"></div>
+  <div class="hero-eyebrow">✦ A Celebration of Love ✦</div>
+  <div class="hero-names">Mom <span class="amp">&</span> Dad</div>
+  <div class="badge">
+    <div class="badge-num">24</div>
+    <div class="badge-label"><strong>Years of Love</strong>together &amp; counting</div>
+  </div>
+  <div class="hero-date">21st June 2002 — 21st June 2026</div>
+  <div class="hero-sub">Twenty-four years of holding hands, sharing dreams, and building a world full of love. Today we celebrate the two people who showed us what forever looks like. 💕</div>
+  <div class="hero-emojis">
+    <span class="h-em" onclick="burstEmojis('💕',this)">💕</span>
+    <span class="h-em" onclick="burstEmojis('🌸',this)">🌸</span>
+    <span class="h-em" onclick="burstEmojis('✨',this)">✨</span>
+    <span class="h-em" onclick="burstEmojis('💐',this)">💐</span>
+    <span class="h-em" onclick="burstEmojis('🎶',this)">🎶</span>
+    <span class="h-em" onclick="burstEmojis('🥂',this)">🥂</span>
+  </div>
+  <div class="scroll-hint" onclick="goTo('s2')"><span>Scroll down</span><span class="hint-arrow">↓</span></div>
+</section>
+
+<!-- ═══ SLIDE 2 — COUNTER ═══ -->
+<section class="slide" id="s2">
+  <div class="sec-eye reveal">By the numbers</div>
+  <h2 class="sec-title reveal">24 years, <em>counted in love</em></h2>
+  <div class="sec-sub reveal">Every moment — measured in things that matter.</div>
+  <div class="counter-grid">
+    <div class="c-card reveal"><span class="c-num" id="cnt-years">24</span><span class="c-lbl">Years</span><span class="c-ico">🌿</span></div>
+    <div class="c-card reveal"><span class="c-num" id="cnt-months">288</span><span class="c-lbl">Months</span><span class="c-ico">🗓️</span></div>
+    <div class="c-card reveal"><span class="c-num" id="cnt-days">8766</span><span class="c-lbl">Days</span><span class="c-ico">☀️</span></div>
+    <div class="c-card reveal"><span class="c-num" id="cnt-hours">210,384</span><span class="c-lbl">Hours</span><span class="c-ico">⏰</span></div>
+    <div class="c-card reveal"><span class="c-num" id="cnt-sunrises">8766</span><span class="c-lbl">Sunrises together</span><span class="c-ico">🌅</span></div>
+    <div class="c-card reveal"><span class="c-num" id="cnt-meals">78,894</span><span class="c-lbl">Meals shared</span><span class="c-ico">🍽️</span></div>
+  </div>
+  <div class="counter-quote reveal">"And the best is yet to come..." 💕</div>
+  <div class="scroll-hint" onclick="goTo('s3')"><span>Keep going</span><span class="hint-arrow">↓</span></div>
+</section>
+
+<!-- ═══ SLIDE 3 — MEMORIES ═══ -->
+<section class="slide" id="s3">
+  <div class="mem-wrap">
+    <div class="mem-header">
+      <div class="sec-eye reveal">A journey through time</div>
+      <h2 class="sec-title reveal">Moments that <em>made us</em></h2>
+      <div class="sec-sub reveal">A few chapters from a beautiful, ongoing story.</div>
+    </div>
+    <div class="memory-card" id="mc1">
+      <div class="mem-icon mi-a">💍</div>
+      <div class="mem-body">
+        <div class="mem-yr">June 2002 · Chapter One</div>
+        <div class="mem-ttl">The Beginning of Forever</div>
+        <div class="mem-txt">Two hearts said "I do" and the world became a warmer, more beautiful place. That one day changed everything — and started the greatest love story we know.</div>
+        <div class="mem-trail">
+          <span class="trail-em" onclick="burstEmojis('💍',this)">💍</span>
+          <span class="trail-em" onclick="burstEmojis('🌹',this)">🌹</span>
+          <span class="trail-em" onclick="burstEmojis('✨',this)">✨</span>
+          <span class="trail-em" onclick="burstEmojis('🎊',this)">🎊</span>
+        </div>
+      </div>
+    </div>
+    <div class="memory-card" id="mc2">
+      <div class="mem-icon mi-b">🏡</div>
+      <div class="mem-body">
+        <div class="mem-yr">Early Years · Building Together</div>
+        <div class="mem-ttl">A Home Filled with Love</div>
+        <div class="mem-txt">Brick by brick, laugh by laugh — you built more than a house. You built a home that always smelled of warmth, felt like safety, and sounded like laughter.</div>
+        <div class="mem-trail">
+          <span class="trail-em" onclick="burstEmojis('🏡',this)">🏡</span>
+          <span class="trail-em" onclick="burstEmojis('🌻',this)">🌻</span>
+          <span class="trail-em" onclick="burstEmojis('💛',this)">💛</span>
+        </div>
+      </div>
+    </div>
+    <div class="memory-card" id="mc3">
+      <div class="mem-icon mi-c">👨‍👩‍👧</div>
+      <div class="mem-body">
+        <div class="mem-yr">The Middle Chapters · Growing Together</div>
+        <div class="mem-ttl">A Family Blooming</div>
+        <div class="mem-txt">Your love didn't just stay between the two of you — it grew. It expanded to hold us, nurture us, and teach us that love is the most generous thing in the world.</div>
+        <div class="mem-trail">
+          <span class="trail-em" onclick="burstEmojis('👨‍👩‍👧',this)">👨‍👩‍👧</span>
+          <span class="trail-em" onclick="burstEmojis('💜',this)">💜</span>
+          <span class="trail-em" onclick="burstEmojis('🌸',this)">🌸</span>
+          <span class="trail-em" onclick="burstEmojis('🎈',this)">🎈</span>
+        </div>
+      </div>
+    </div>
+    <div class="memory-card" id="mc4">
+      <div class="mem-icon mi-d">🌟</div>
+      <div class="mem-body">
+        <div class="mem-yr">Today · Year 24</div>
+        <div class="mem-ttl">Still Going Strong</div>
+        <div class="mem-txt">Twenty-four years later and the spark hasn't dimmed — it's only grown brighter. Every shared meal, every quiet evening together is proof that real love is timeless.</div>
+        <div class="mem-trail">
+          <span class="trail-em" onclick="burstEmojis('🌟',this)">🌟</span>
+          <span class="trail-em" onclick="burstEmojis('💕',this)">💕</span>
+          <span class="trail-em" onclick="burstEmojis('🥂',this)">🥂</span>
+          <span class="trail-em" onclick="burstEmojis('🎉',this)">🎉</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="scroll-hint" onclick="goTo('s4')" style="position:static;margin-top:20px;"><span>Keep going</span><span class="hint-arrow">↓</span></div>
+</section>
+
+<!-- ═══ SLIDE 4 — GALLERY PAGE I (Photos 1-4) ═══ -->
+<section class="slide" id="s4">
+  <div class="sec-eye reveal">Your story in pictures · Page 1 of 2</div>
+  <h2 class="sec-title reveal">The <em>gallery</em> of us</h2>
+  <div class="sec-sub reveal">Click the floating emojis around each photo — they burst! 💥</div>
+
+  <div class="photo-stage reveal">
+    <div class="gallery-grid">
+
+      <!-- PHOTO 1 -->
+      <div class="g-wrap">
+        <div class="g-card" onclick="openLightbox(1,'Our wedding day — June 2002')">
+          <span class="g-ico">📸</span>
+          <img src="photo1.jpeg" alt="Photo 1">
+          <div class="g-num">Add here</div>
+          <div class="g-caption">Our Wedding Day 💍</div>
+        </div>
+        <span class="orbit-em" style="top:-6px;left:50%;transform:translateX(-50%);" onclick="burstEmojis('💍',this)">💍</span>
+        <span class="orbit-em" style="top:50%;right:-6px;transform:translateY(-50%);" onclick="burstEmojis('🌹',this)">🌹</span>
+        <span class="orbit-em" style="bottom:-6px;left:50%;transform:translateX(-50%);" onclick="burstEmojis('✨',this)">✨</span>
+        <span class="orbit-em" style="top:50%;left:-6px;transform:translateY(-50%);" onclick="burstEmojis('💕',this)">💕</span>
+      </div>
+
+      <!-- PHOTO 2 -->
+      <div class="g-wrap">
+        <div class="g-card" onclick="openLightbox(2,'A cherished memory')">
+          <span class="g-ico">💕</span>
+          <img src="photo2.jpeg" alt="Photo 2">
+          <div class="g-num">Add here</div>
+          <div class="g-caption">A Cherished Memory 🌸</div>
+        </div>
+        <span class="orbit-em" style="top:-6px;left:50%;transform:translateX(-50%);" onclick="burstEmojis('🌸',this)">🌸</span>
+        <span class="orbit-em" style="top:50%;right:-6px;transform:translateY(-50%);" onclick="burstEmojis('🦋',this)">🦋</span>
+        <span class="orbit-em" style="bottom:-6px;left:50%;transform:translateX(-50%);" onclick="burstEmojis('💐',this)">💐</span>
+        <span class="orbit-em" style="top:50%;left:-6px;transform:translateY(-50%);" onclick="burstEmojis('⭐',this)">⭐</span>
+      </div>
+
+      <!-- PHOTO 3 -->
+      <div class="g-wrap">
+        <div class="g-card" onclick="openLightbox(3,'Together always')">
+          <span class="g-ico">🌸</span>
+          <img src="photo3.webp" alt="Photo 3">
+          <div class="g-num">Add here</div>
+          <div class="g-caption">Together Always 💜</div>
+        </div>
+        <span class="orbit-em" style="top:-6px;left:50%;transform:translateX(-50%);" onclick="burstEmojis('💜',this)">💜</span>
+        <span class="orbit-em" style="top:50%;right:-6px;transform:translateY(-50%);" onclick="burstEmojis('🎶',this)">🎶</span>
+        <span class="orbit-em" style="bottom:-6px;left:50%;transform:translateX(-50%);" onclick="burstEmojis('🌙',this)">🌙</span>
+        <span class="orbit-em" style="top:50%;left:-6px;transform:translateY(-50%);" onclick="burstEmojis('🕊️',this)">🕊️</span>
+      </div>
+
+      <!-- PHOTO 4 -->
+      <div class="g-wrap">
+        <div class="g-card" onclick="openLightbox(4,'Always smiling')">
+          <span class="g-ico">🌟</span>
+          <img src="photo4.jpeg" alt="Photo 4">
+          <div class="g-num">Add here</div>
+          <div class="g-caption">Always Smiling ✨</div>
+        </div>
+        <span class="orbit-em" style="top:-6px;left:50%;transform:translateX(-50%);" onclick="burstEmojis('🌻',this)">🌻</span>
+        <span class="orbit-em" style="top:50%;right:-6px;transform:translateY(-50%);" onclick="burstEmojis('👑',this)">👑</span>
+        <span class="orbit-em" style="bottom:-6px;left:50%;transform:translateX(-50%);" onclick="burstEmojis('🎉',this)">🎉</span>
+        <span class="orbit-em" style="top:50%;left:-6px;transform:translateY(-50%);" onclick="burstEmojis('💫',this)">💫</span>
+      </div>
+
+    </div><!-- /gallery-grid -->
+  </div><!-- /photo-stage -->
+
+  
+  <div class="scroll-hint" onclick="goTo('s5')" style="position:static;margin-top:14px;"><span>More photos</span><span class="hint-arrow">↓</span></div>
+</section>
+
+<!-- ═══ SLIDE 5 — GALLERY PAGE II (Photos 5-8) ═══ -->
+<section class="slide" id="s5">
+  <div class="sec-eye reveal">Your story in pictures · Page 2 of 2</div>
+  <h2 class="sec-title reveal">More <em>beautiful</em> moments</h2>
+  <div class="sec-sub reveal">Click the floating emojis around each photo — they burst! 💥</div>
+
+  <div class="photo-stage reveal">
+    <div class="gallery-grid">
+
+      <!-- PHOTO 5 -->
+      <div class="g-wrap">
+        <div class="g-card" onclick="openLightbox(5,'A moment in time')">
+          <span class="g-ico">✨</span>
+          <img src="photo5.jpeg" alt="Photo 5">
+          <div class="g-num">Add here</div>
+          <div class="g-caption">A Moment in Time 🌅</div>
+        </div>
+        <span class="orbit-em" style="top:-6px;left:50%;transform:translateX(-50%);" onclick="burstEmojis('🌅',this)">🌅</span>
+        <span class="orbit-em" style="top:50%;right:-6px;transform:translateY(-50%);" onclick="burstEmojis('🥂',this)">🥂</span>
+        <span class="orbit-em" style="bottom:-6px;left:50%;transform:translateX(-50%);" onclick="burstEmojis('❤️',this)">❤️</span>
+        <span class="orbit-em" style="top:50%;left:-6px;transform:translateY(-50%);" onclick="burstEmojis('🎂',this)">🎂</span>
+      </div>
+
+      <!-- PHOTO 6 -->
+      <div class="g-wrap">
+        <div class="g-card" onclick="openLightbox(6,'Forever memories')">
+          <span class="g-ico">💐</span>
+          <img src="photo6.jpeg" alt="Photo 6">
+          <div class="g-num">Add here</div>
+          <div class="g-caption">Forever Memories 💐</div>
+        </div>
+        <span class="orbit-em" style="top:-6px;left:50%;transform:translateX(-50%);" onclick="burstEmojis('🌺',this)">🌺</span>
+        <span class="orbit-em" style="top:50%;right:-6px;transform:translateY(-50%);" onclick="burstEmojis('💖',this)">💖</span>
+        <span class="orbit-em" style="bottom:-6px;left:50%;transform:translateX(-50%);" onclick="burstEmojis('🎊',this)">🎊</span>
+        <span class="orbit-em" style="top:50%;left:-6px;transform:translateY(-50%);" onclick="burstEmojis('🌷',this)">🌷</span>
+      </div>
+
+      <!-- PHOTO 7 -->
+      <div class="g-wrap">
+        <div class="g-card" onclick="openLightbox(7,'Celebrating together')">
+          <span class="g-ico">🎊</span>
+          <img src="photo7.jpeg" alt="Photo 7">
+          <div class="g-num">Add here</div>
+          <div class="g-caption">Celebrating Together 🥳</div>
+        </div>
+        <span class="orbit-em" style="top:-6px;left:50%;transform:translateX(-50%);" onclick="burstEmojis('🎈',this)">🎈</span>
+        <span class="orbit-em" style="top:50%;right:-6px;transform:translateY(-50%);" onclick="burstEmojis('🥳',this)">🥳</span>
+        <span class="orbit-em" style="bottom:-6px;left:50%;transform:translateX(-50%);" onclick="burstEmojis('🎁',this)">🎁</span>
+        <span class="orbit-em" style="top:50%;left:-6px;transform:translateY(-50%);" onclick="burstEmojis('🍰',this)">🍰</span>
+      </div>
+
+      <!-- PHOTO 8 -->
+      <div class="g-wrap">
+        <div class="g-card" onclick="openLightbox(8,'Our forever love story')">
+          <span class="g-ico">💞</span>
+          <img src="photo8.jpeg" alt="Photo 8">
+          <div class="g-num">Add here</div>
+          <div class="g-caption">Our Forever Story 💞</div>
+        </div>
+        <span class="orbit-em" style="top:-6px;left:50%;transform:translateX(-50%);" onclick="burstEmojis('💞',this)">💞</span>
+        <span class="orbit-em" style="top:50%;right:-6px;transform:translateY(-50%);" onclick="burstEmojis('🌟',this)">🌟</span>
+        <span class="orbit-em" style="bottom:-6px;left:50%;transform:translateX(-50%);" onclick="burstEmojis('💗',this)">💗</span>
+        <span class="orbit-em" style="top:50%;left:-6px;transform:translateY(-50%);" onclick="burstEmojis('🦢',this)">🦢</span>
+      </div>
+
+    </div><!-- /gallery-grid -->
+  </div><!-- /photo-stage -->
+
+  
+  <div class="scroll-hint" onclick="goTo('s6')" style="position:static;margin-top:14px;"><span>Keep going</span><span class="hint-arrow">↓</span></div>
+</section>
+
+<!-- LIGHTBOX -->
+<div id="lightbox">
+  <div class="lb-inner">
+    <button class="lb-close" onclick="closeLightbox()">✕</button>
+    <div class="lb-ph">📸</div>
+    <div class="lb-caption" id="lb-caption">Add your photo here</div>
+  </div>
+</div>
+
+<!-- ═══ SLIDE 7 — FIREWORKS FINALE ═══ -->
+<section class="slide" id="s7">
+  <canvas id="fw-canvas"></canvas>
+  <div class="finale-inner">
+    <span class="fin-em">🎆</span>
+    <div class="fin-title">Happy Anniversary!</div>
+    <div class="fin-sub">Mom &amp; Dad — thank you for 24 beautiful years of love, laughter, and everything in between.</div>
+    <div class="fin-num">24</div>
+    <div class="fin-lbl">Years of forever ✦</div>
+    <button class="fin-btn" onclick="launchAllFireworks()">🎆 Launch Fireworks!</button>
+  </div>
+</section>
+
+<div id="toast"></div>
+<audio id="bg-music" loop preload="auto">
+  <!-- <source src="tum-hi-ho.mp3" type="audio/mpeg"> -->
+</audio>
+
+<script>
+// ── ORBIT EMOJI CSS VARS (inline style clash fix) ──
+// Set --od and --odel properly on each orbit emoji
+document.querySelectorAll('.orbit-em').forEach(el => {
+  const d  = ['3.6s','3.8s','4.0s','4.2s','4.4s','4.6s'][Math.floor(Math.random()*6)];
+  const dl = (Math.random()*1.2).toFixed(2)+'s';
+  el.style.setProperty('--od', d);
+  el.style.setProperty('--odel', dl);
+});
+
+// ── NAV ──
+const slides = ['s1','s2','s3','s4','s5','s6'];
+function goTo(id){ document.getElementById(id).scrollIntoView({behavior:'smooth'}); }
+const allDots = document.querySelectorAll('.dot');
+function updateDots(){
+  const st = document.body.scrollTop;
+  const vh = window.innerHeight;
+  let active = 0;
+  slides.forEach((id,i)=>{
+    const el = document.getElementById(id);
+    if(el && el.offsetTop <= st + vh*0.5) active = i;
+  });
+  allDots.forEach((d,i)=>d.classList.toggle('active',i===active));
+}
+document.body.addEventListener('scroll', updateDots);
+updateDots();
+
+// ── MUSIC ──
+const songs = [
+  {title:"Tum Hi Ho",               artist:"Aashiqui 2",            file:"tum-hi-ho.mp3"},
+  {title:"Tujh Mein Rab Dikhta Hai",artist:"Rab Ne Bana Di Jodi",   file:"tujh-mein-rab.mp3"},
+  {title:"Raabta",                  artist:"Agent Sasco",            file:"raabta.mp3"},
+  {title:"Kal Ho Naa Ho",           artist:"Sonu Nigam",             file:"kal-ho-na-ho.mp3"},
+  {title:"Tere Liye",               artist:"Atif Aslam",             file:"tere-liye.mp3"},
+];
+let curSong=0;
+const audio=document.getElementById('bg-music');
+const progFill=document.getElementById('prog-fill');
+function loadSong(idx){
+  curSong=(idx+songs.length)%songs.length;
+  const s=songs[curSong];
+  audio.src=s.file;
+  document.getElementById('song-title').textContent=s.title;
+  document.getElementById('song-subtitle').textContent='♪ '+s.artist+' — playing for love ♪';
+  progFill.style.animation='none';
+  void progFill.offsetWidth;
+  progFill.style.animation='progAnim 30s linear infinite';
+  audio.play().catch(()=>{});
+}
+document.getElementById('play-btn').onclick=()=>{
+  if(audio.paused){audio.play();document.getElementById('play-btn').textContent='⏸';}
+  else{audio.pause();document.getElementById('play-btn').textContent='▶️';}
+};
+document.getElementById('next-btn').onclick=()=>loadSong(curSong+1);
+document.getElementById('prev-btn').onclick=()=>loadSong(curSong-1);
+audio.addEventListener('ended',()=>loadSong(curSong+1));
+document.body.addEventListener('click',function ap(){if(audio.paused)loadSong(0);document.body.removeEventListener('click',ap);},{once:true});
+window.addEventListener('load',()=>{audio.src=songs[0].file;audio.play().catch(()=>{});});
+
+// ── PETALS ──
+const petalEmoji=['🌸','🌺','🌷','💮','🌼','🏵️'];
+const pl=document.getElementById('petal-layer');
+function spawnPetal(){
+  const p=document.createElement('div');
+  p.className='petal';
+  p.textContent=petalEmoji[Math.floor(Math.random()*petalEmoji.length)];
+  p.style.left=Math.random()*100+'vw';
+  const dur=6+Math.random()*8;
+  p.style.fontSize=(14+Math.random()*14)+'px';
+  p.style.animationDuration=dur+'s';
+  p.style.animationDelay=Math.random()*-dur+'s';
+  pl.appendChild(p);
+  setTimeout(()=>p.remove(),(dur+2)*1000);
+}
+setInterval(spawnPetal,600);
+for(let i=0;i<10;i++) spawnPetal();
+
+// ── EMOJI BURST ──
+function burstEmojis(emoji,el){
+  const container=document.getElementById('burst-layer');
+  const rect=el?el.getBoundingClientRect():{left:window.innerWidth/2,top:window.innerHeight/2,width:0,height:0};
+  const cx=rect.left+rect.width/2;
+  const cy=rect.top+rect.height/2;
+  for(let i=0;i<14;i++){
+    const e=document.createElement('div');
+    e.className='burst-emoji';
+    e.textContent=emoji;
+    const angle=(Math.PI*2/14)*i;
+    const dist=80+Math.random()*90;
+    e.style.left=cx+'px';e.style.top=cy+'px';
+    e.style.fontSize=(18+Math.random()*16)+'px';
+    e.style.setProperty('--bx',Math.cos(angle)*dist+'px');
+    e.style.setProperty('--by',Math.sin(angle)*dist+'px');
+    e.style.setProperty('--br',(Math.random()*360-180)+'deg');
+    e.style.animationDelay=(i*0.04)+'s';
+    container.appendChild(e);
+    setTimeout(()=>e.remove(),1500);
+  }
+  showToast(emoji+' Sending love! 💕');
+}
+
+// ── TOAST ──
+let toastT;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2200);
+}
+
+// ── LIGHTBOX ──
+function openLightbox(n,caption){
+  document.getElementById('lightbox').classList.add('open');
+  document.getElementById('lb-caption').textContent='📸 '+caption+' — Photo '+n;
+}
+function closeLightbox(){document.getElementById('lightbox').classList.remove('open');}
+document.getElementById('lightbox').onclick=function(e){if(e.target===this)closeLightbox();};
+
+// ── LIVE COUNTER ──
+function updateCounters(){
+  const wedding=new Date('2002-06-21T00:00:00');
+  const now=new Date();
+  const ms=now-wedding;
+  const days=Math.floor(ms/(1000*60*60*24));
+  const years=Math.floor(days/365.25);
+  const months=Math.floor(days/30.44);
+  const hours=Math.floor(ms/(1000*60*60));
+  const fmt=n=>n.toLocaleString('en-IN');
+  document.getElementById('cnt-years').textContent=years;
+  document.getElementById('cnt-months').textContent=fmt(months);
+  document.getElementById('cnt-days').textContent=fmt(days);
+  document.getElementById('cnt-hours').textContent=fmt(hours);
+  document.getElementById('cnt-sunrises').textContent=fmt(days);
+  document.getElementById('cnt-meals').textContent=fmt(days*9);
+}
+updateCounters();
+
+// ── SCROLL REVEAL ──
+const ro=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});
+},{threshold:0.12});
+document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+const mo=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis');});
+},{threshold:0.2});
+document.querySelectorAll('.memory-card').forEach(el=>mo.observe(el));
+
+// ── FIREWORKS ──
+const canvas=document.getElementById('fw-canvas');
+const ctx=canvas.getContext('2d');
+let particles=[],fwActive=false;
+function resizeCanvas(){canvas.width=canvas.offsetWidth;canvas.height=canvas.offsetHeight;}
+resizeCanvas();window.addEventListener('resize',resizeCanvas);
+class Particle{
+  constructor(x,y,color){
+    this.x=x;this.y=y;
+    const a=Math.random()*Math.PI*2,sp=2+Math.random()*6;
+    this.vx=Math.cos(a)*sp;this.vy=Math.sin(a)*sp;
+    this.life=1;this.decay=0.012+Math.random()*0.018;
+    this.color=color;this.size=2+Math.random()*3;this.gravity=0.08;
+  }
+  update(){this.x+=this.vx;this.y+=this.vy;this.vy+=this.gravity;this.vx*=0.99;this.life-=this.decay;}
+  draw(){
+    ctx.save();ctx.globalAlpha=Math.max(0,this.life);
+    ctx.fillStyle=this.color;ctx.shadowColor=this.color;ctx.shadowBlur=4;
+    ctx.beginPath();ctx.arc(this.x,this.y,this.size,0,Math.PI*2);ctx.fill();ctx.restore();
+  }
+}
+const fwColors=['#F7C5D0','#C8AEED','#FFD700','#FF69B4','#87CEEB','#98FB98','#FFA07A','#DDA0DD','#F0E68C','#FF6B6B'];
+function launchFirework(){
+  const x=80+Math.random()*(canvas.width-160);
+  const y=60+Math.random()*(canvas.height*0.6);
+  const color=fwColors[Math.floor(Math.random()*fwColors.length)];
+  for(let i=0;i<70;i++) particles.push(new Particle(x,y,color));
+}
+function animateFW(){
+  ctx.clearRect(0,0,canvas.width,canvas.height);
+  particles=particles.filter(p=>p.life>0);
+  particles.forEach(p=>{p.update();p.draw();});
+  if(fwActive||particles.length>0) requestAnimationFrame(animateFW);
+}
+let fwInt;
+function launchAllFireworks(){
+  fwActive=true;animateFW();let n=0;
+  fwInt=setInterval(()=>{launchFirework();n++;if(n>=24){fwActive=false;clearInterval(fwInt);}},280);
+  showToast('🎆 Fireworks for Mom & Dad! 💕');
+}
+const fwObs=new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting&&!fwActive){setTimeout(launchAllFireworks,600);fwObs.disconnect();}
+},{threshold:0.3});
+fwObs.observe(document.getElementById('s6'));
+</script>
+</body>
+</html>
